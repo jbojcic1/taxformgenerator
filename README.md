@@ -47,6 +47,6 @@ PARAMS:
     - format: MM/YYYY
 
 Example of the run:
-  dotnet ./TaxFormGenerator.dll --date 12/21/2017 --salaryMonth 11/2017
+  dotnet ./TaxFormGenerator.dll --date 12/19/2017 --salaryMonth 11/2017
 
     
