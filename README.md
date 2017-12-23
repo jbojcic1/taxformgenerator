@@ -1,5 +1,5 @@
 # taxformgenerator
-Console app for generating Croatian tax forms. You can pull code and build it or you can get [PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.0.0/OSx.-.Tax.Form.Generator.zip)
+Console app for generating Croatian tax forms. You can pull code and build it or you can get [OSX PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.1.0/OSx.-.Tax.Form.Generator.zip) or [WIN10 PREBUILT VERSION HERE] (https://github.com/jbojcic1/taxformgenerator/releases/download/v1.1.0/Win10.-.Tax.Form.Generator.zip)
 
 REQUIREMENTS: 
   - macos release >= 10.12
@@ -57,7 +57,9 @@ PARAMS:
     - format: MM/DD/YYYY
 
 Example of the run:
-  1) salary JOPPD:    dotnet ./TaxFormGenerator.dll --date 12/19/2017 --salaryMonth 11/2017
-  2) dividend JOPPD:  dotnet ./TaxFormGenerator.dll --formType DividendJOPPD --date 12/20/2017 --amount 5000
+  1) salary JOPPD:    
+        dotnet ./TaxFormGenerator.dll --date 12/19/2017 --salaryMonth 11/2017
+  2) dividend JOPPD:  
+        dotnet ./TaxFormGenerator.dll --formType DividendJOPPD --date 12/20/2017 --amount 5000
 
     
