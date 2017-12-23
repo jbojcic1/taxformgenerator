@@ -26,6 +26,8 @@
     <Folder Include="FormGenerator\SalaryJOPPD\" Exclude="FormGenerator\SalaryJOPPD\**\*.xml" />
     <Folder Include="SalaryCalculator\" Exclude="SalaryCalculator\SalaryConfig.json" />
     <Folder Include="Output\" Exclude="Output\" />
+    <Folder Include="FormGenerator\DividendJOPPD\" />
+    <Folder Include="DividendCalculator\" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
     <None Update="Output\.gitkeep" CopyToPublishDirectory="Always" />

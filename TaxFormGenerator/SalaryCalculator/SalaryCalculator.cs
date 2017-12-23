@@ -47,9 +47,6 @@ namespace TaxFormGenerator.SalaryCalculator
             // Prirez
             salaryBreakdown.Surtax = Math.Round(this.salaryTax.Surtax * salaryBreakdown.Tax, 2);
 
-            // Neto
-            salaryBreakdown.Net = salaryBreakdown.Income - salaryBreakdown.TaxTotal;
-
             return salaryBreakdown;
         }
     }

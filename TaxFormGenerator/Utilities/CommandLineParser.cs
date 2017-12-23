@@ -17,6 +17,14 @@ namespace TaxFormGenerator.Utilities
             parser.Setup(arg => arg.Date)
                   .As('d', "date")
                   .SetDefault(DateTime.Now);
+
+            parser.Setup(arg => arg.StartDate)
+                 .As('s', "startDate")
+                 .SetDefault(new DateTime(DateTime.Now.Year, 1, 1));
+
+            parser.Setup(arg => arg.EndDate)
+                 .As('e', "endDate")
+                 .SetDefault(new DateTime(DateTime.Now.Year, 12, 31));
             
             parser.Setup(arg => arg.Amount)
                   .As('a', "amount")

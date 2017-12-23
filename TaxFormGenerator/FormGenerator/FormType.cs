@@ -1,8 +1,8 @@
-﻿using System;
-namespace TaxFormGenerator.FormGenerator
+﻿namespace TaxFormGenerator.FormGenerator
 {
     public enum FormType
     {
-        SalaryJOPPD
+        SalaryJOPPD,
+        DividendJOPPD
     }
 }

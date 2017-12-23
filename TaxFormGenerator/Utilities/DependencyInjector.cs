@@ -3,7 +3,9 @@ using System.Net.Http;
 using Microsoft.Extensions.DependencyInjection;
 using TaxFormGenerator.CurrencyConverter;
 using TaxFormGenerator.CurrencyConverter.HNB;
+using TaxFormGenerator.DividendCalculator;
 using TaxFormGenerator.FormGenerator;
+using TaxFormGenerator.FormGenerator.DividendJOPPD;
 using TaxFormGenerator.FormGenerator.SalaryJOPPD;
 using TaxFormGenerator.SalaryCalculator;
 
@@ -18,9 +20,11 @@ namespace TaxFormGenerator.Utilities
             this.serviceProvider = new ServiceCollection()
                 .AddLogging()
                 .AddSingleton(sp => new HttpClient())
-                .AddTransient<IFormGenerator, SalaryJOPPDGenerator>()
                 .AddTransient<ICurrencyConverter, HNBCurrencyConverter>()
                 .AddTransient<ISalaryCalculator, SalaryCalculator.SalaryCalculator>()
+                .AddTransient<IDividendCalculator, DividendCalculator.DividendCalculator>()
+                .AddTransient<SalaryJOPPDGenerator, SalaryJOPPDGenerator>()
+                .AddTransient<DividendJOPPDGenerator, DividendJOPPDGenerator>()
                 .BuildServiceProvider();
 
             //configure console logging
@@ -34,7 +38,9 @@ namespace TaxFormGenerator.Utilities
             // Switch to using more powerful lib later
             switch (formType) {
                 case FormType.SalaryJOPPD:
-                    return this.serviceProvider.GetService<IFormGenerator>();
+                    return this.serviceProvider.GetService<SalaryJOPPDGenerator>();
+                case FormType.DividendJOPPD:
+                    return this.serviceProvider.GetService<DividendJOPPDGenerator>();
                 default:
                     throw new ArgumentOutOfRangeException(nameof(formType), "Unsupported form type.");
             }

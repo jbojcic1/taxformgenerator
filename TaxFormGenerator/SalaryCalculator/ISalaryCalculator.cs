@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TaxFormGenerator.SalaryCalculator
+﻿namespace TaxFormGenerator.SalaryCalculator
 {
     public interface ISalaryCalculator
     {

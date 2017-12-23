@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TaxFormGenerator.SalaryCalculator
+﻿namespace TaxFormGenerator.SalaryCalculator
 {
     public class SalaryBreakdown
     {
@@ -26,6 +24,6 @@ namespace TaxFormGenerator.SalaryCalculator
         public decimal Surtax { get; set; }
         public decimal TaxTotal => Tax + Surtax;
 
-        public decimal Net { get; set; }
+        public decimal Net => Income - TaxTotal;
     }
 }
