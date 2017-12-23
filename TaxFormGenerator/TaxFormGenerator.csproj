@@ -27,13 +27,14 @@
     <Folder Include="SalaryCalculator\" Exclude="SalaryCalculator\SalaryConfig.json" />
     <Folder Include="Output\" Exclude="Output\" />
     <Folder Include="FormGenerator\DividendJOPPD\" />
-    <Folder Include="DividendCalculator\" />
+    <Folder Include="DividendCalculator\" Exclude="DividendCalculator\DividendJOPPD\**\*.xml" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
     <None Update="Output\.gitkeep" CopyToPublishDirectory="Always" />
     <None Update="SalaryCalculator\SalaryConfig.json" CopyToPublishDirectory="Always" />
     <None Update="FormGenerator\SalaryJOPPD\ContributionsJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
     <None Update="FormGenerator\SalaryJOPPD\TaxAndSurtaxJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
+    <None Update="DividendCalculator\DividendJOPPD\DividendJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
 </Project>
