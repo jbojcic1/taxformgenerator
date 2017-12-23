@@ -1,5 +1,5 @@
 # taxformgenerator
-Console app for generating Croatian tax forms. You can pull code and build it or you can get [PREBUILT VERSION HERE](https://drive.google.com/open?id=1Uvm1_zcpD27JXNO1OQyLcKvf6TjM8_NU)
+Console app for generating Croatian tax forms. You can pull code and build it or you can get [PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.0.0/OSx.-.Tax.Form.Generator.zip)
 
 REQUIREMENTS: 
   - macos release >= 10.12
