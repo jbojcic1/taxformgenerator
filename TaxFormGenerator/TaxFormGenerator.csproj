@@ -25,16 +25,16 @@
     <Folder Include="Utilities\" />
     <Folder Include="FormGenerator\SalaryJOPPD\" Exclude="FormGenerator\SalaryJOPPD\**\*.xml" />
     <Folder Include="SalaryCalculator\" Exclude="SalaryCalculator\SalaryConfig.json" />
-    <Folder Include="Output\" Exclude="Output\" />
-    <Folder Include="FormGenerator\DividendJOPPD\" />
-    <Folder Include="DividendCalculator\" Exclude="DividendCalculator\DividendJOPPD\**\*.xml" />
+    <Folder Include="Output\" Exclude="Output\**\*.xml" />
+    <Folder Include="FormGenerator\DividendJOPPD\" Exclude="DividendCalculator\DividendJOPPD\**\*.xml" />
+    <Folder Include="DividendCalculator\" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
     <None Update="Output\.gitkeep" CopyToPublishDirectory="Always" />
     <None Update="SalaryCalculator\SalaryConfig.json" CopyToPublishDirectory="Always" />
     <None Update="FormGenerator\SalaryJOPPD\ContributionsJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
     <None Update="FormGenerator\SalaryJOPPD\TaxAndSurtaxJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
-    <None Update="DividendCalculator\DividendJOPPD\DividendJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
+    <None Update="FormGenerator\DividendJOPPD\DividendJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
 </Project>
