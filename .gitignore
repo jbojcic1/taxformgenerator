@@ -41,3 +41,4 @@ Thumbs.db
 
 # exclude generated forms
 TaxFormGenerator/Output/*.xml
+TaxFormGenerator/Output/*.pdf

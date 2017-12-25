@@ -1,0 +1,17 @@
+﻿{
+  "sender": {
+    "name": "{YOUR NAME}",
+    "street": "{YOUR STREET}",
+    "place": "{YOUR POSTCODE} {YOUR CITY}"
+  },
+  "receiver": {
+    "name": "DOPR.ZA MIROV.OSIG. ZA STAROST",
+    "street": "",
+    "place": "ZAGREB",
+    "iban": "HR7610010051700036001",
+    "model": "68",
+    "reference": "2283-{YOUR COMPANY OIB}-"
+  },
+  "purpose": "",
+  "description": "Doprinosi mirovinsko stup 2 "
+}

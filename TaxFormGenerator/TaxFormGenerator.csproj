@@ -17,25 +17,27 @@
     <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
     <PackageReference Include="System.Net.Http" Version="4.3.3" />
     <PackageReference Include="CommandLineParser.Core" Version="1.0.1" />
+    <PackageReference Include="iTextSharp" Version="5.5.12" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FormGenerator\" Exclude="FormGenerator\**\*.xml" />
     <Folder Include="CurrencyConverter\" />
     <Folder Include="CurrencyConverter\HNB\" />
     <Folder Include="Utilities\" />
-    <Folder Include="Output\" Exclude="Output\**\*.xml" />
+    <Folder Include="Output\" Exclude="Output\**\*.xml;Output\**\*.pdf" />
     <Folder Include="SalaryCalculator\" Exclude="SalaryCalculator\SalaryConfig.json" />
-    <Folder Include="FormGenerator\SalaryJOPPD\" Exclude="FormGenerator\SalaryJOPPD\**\*.xml" />
+    <Folder Include="FormGenerator\SalaryJOPPD\" Exclude="FormGenerator\SalaryJOPPD\**\*.xml;FormGenerator\SalaryJOPPD\**\*.json" />
     <Folder Include="DividendCalculator\" Exclude="DividendCalculator\DividendConfig.json" />
-    <Folder Include="FormGenerator\DividendJOPPD\" Exclude="DividendCalculator\DividendJOPPD\**\*.xml" />
+    <Folder Include="FormGenerator\DividendJOPPD\" Exclude="DividendCalculator\DividendJOPPD\**\*.xml;DividendCalculator\DividendJOPPD\**\*.json" />
+    <Folder Include="Payment2DBarCodeGenerator\" />
+    <Folder Include="Payment2DBarCodeGenerator\HUB3\" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' == 'Release' ">
     <None Update="Output\.gitkeep" CopyToPublishDirectory="Always" />
     <None Update="SalaryCalculator\SalaryConfig.json" CopyToPublishDirectory="Always" />
-    <None Update="FormGenerator\SalaryJOPPD\ContributionsJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
-    <None Update="FormGenerator\SalaryJOPPD\TaxAndSurtaxJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
     <None Update="DividendCalculator\DividendConfig.json" CopyToPublishDirectory="Always" />
-    <None Update="FormGenerator\DividendJOPPD\DividendJOPPDTemplate.xml" CopyToPublishDirectory="Always" />
+    <None Update="FormGenerator\**\*.xml" CopyToPublishDirectory="Always" />
+    <None Update="FormGenerator\**\*.json" CopyToPublishDirectory="Always" />
   </ItemGroup>
 
 </Project>

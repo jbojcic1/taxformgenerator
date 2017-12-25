@@ -1,0 +1,17 @@
+﻿{
+  "sender": {
+    "name": "{YOUR NAME}",
+    "street": "{YOUR STREET}",
+    "place": "{YOUR POSTCODE} {YOUR CITY}"
+  },
+  "receiver": {
+    "name": "POREZ I PRIREZ NA DOHODAK",
+    "street": "",
+    "place": "{YOUR CITY}",
+    "iban": "{YOUR CITY IBAN}",
+    "model": "68",
+    "reference": "1880-{YOUR OIB}-"
+  },
+  "purpose": "",
+  "description": "Porez i prirez na dohodak - "
+}
