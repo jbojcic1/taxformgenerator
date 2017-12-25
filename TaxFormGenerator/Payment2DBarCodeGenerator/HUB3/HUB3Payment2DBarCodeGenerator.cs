@@ -18,13 +18,13 @@ namespace TaxFormGenerator.Payment2DBarCodeGenerator.HUB3
 
         public async Task<byte[]> GeneratePayment2DBarcode(PaymentInfo paymentInfo)
         {
-            var hub3Payment2DBarcodeInfo = new HUB3Payment2DBarcodeInfo();
-            hub3Payment2DBarcodeInfo.Data = paymentInfo;
+            var hub3Payment2DBarcodeInfo = new HUB3Payment2DBarcodeInfo { Data = paymentInfo };
 
             var response = await this.httpClient.PostAsync(ApiUrl, HttpClientHelper.GetJsonHttpContent(hub3Payment2DBarcodeInfo));
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
+                // TODO: add some logging or something
             }
             response.EnsureSuccessStatusCode();
 
