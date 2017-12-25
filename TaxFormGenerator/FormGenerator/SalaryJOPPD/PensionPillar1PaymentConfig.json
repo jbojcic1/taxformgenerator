@@ -1,0 +1,17 @@
+﻿{
+  "sender": {
+    "name": "{YOUR NAME}",
+    "street": "{YOUR STREET}",
+    "place": "{YOUR POSTCODE} {YOUR CITY}"
+  },
+  "receiver": {
+    "name": "DRŽAVNI PRORAČUN RH",
+    "street": "",
+    "place": "ZAGREB",
+    "iban": "HR1210010051863000160",
+    "model": "68",
+    "reference": "8168-{YOUR COMPANY OIB}-"
+  },
+  "purpose": "",
+  "description": "Doprinosi mirovinsko stup 1 "
+}

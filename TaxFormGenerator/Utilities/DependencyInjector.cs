@@ -7,6 +7,8 @@ using TaxFormGenerator.DividendCalculator;
 using TaxFormGenerator.FormGenerator;
 using TaxFormGenerator.FormGenerator.DividendJOPPD;
 using TaxFormGenerator.FormGenerator.SalaryJOPPD;
+using TaxFormGenerator.Payment2DBarCodeGenerator;
+using TaxFormGenerator.Payment2DBarCodeGenerator.HUB3;
 using TaxFormGenerator.SalaryCalculator;
 
 namespace TaxFormGenerator.Utilities
@@ -21,6 +23,7 @@ namespace TaxFormGenerator.Utilities
                 .AddLogging()
                 .AddSingleton(sp => new HttpClient())
                 .AddTransient<ICurrencyConverter, HNBCurrencyConverter>()
+                .AddTransient<IPayment2DBarCodeGenerator, HUB3Payment2DBarCodeGenerator>()
                 .AddTransient<ISalaryCalculator, SalaryCalculator.SalaryCalculator>()
                 .AddTransient<IDividendCalculator, DividendCalculator.DividendCalculator>()
                 .AddTransient<SalaryJOPPDGenerator, SalaryJOPPDGenerator>()

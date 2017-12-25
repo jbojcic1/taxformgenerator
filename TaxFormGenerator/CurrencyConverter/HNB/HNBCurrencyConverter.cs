@@ -8,6 +8,8 @@ namespace TaxFormGenerator.CurrencyConverter.HNB
 {
     public class HNBCurrencyConverter : ICurrencyConverter
     {
+        private const string ApiUrl = "http://api.hnb.hr/tecajn";
+
         private readonly CultureInfo culture;
         private readonly HttpClient httpClient;
 
@@ -15,13 +17,12 @@ namespace TaxFormGenerator.CurrencyConverter.HNB
         {
             this.culture = new CultureInfo("hr-HR");
             this.httpClient = httpClient;
-            this.httpClient.BaseAddress = new Uri("http://api.hnb.hr/");
         }
 
         public async Task<decimal> ConvertCurrency(decimal amount, string currency, DateTime date)
         {
             var dateString = date.ToString("yyyy-MM-dd");
-            var response = await this.httpClient.GetAsync($"tecajn?valuta={currency}&datum-od={dateString}&datum-do={dateString}");
+            var response = await this.httpClient.GetAsync($"{ApiUrl}?valuta={currency}&datum-od={dateString}&datum-do={dateString}");
             response.EnsureSuccessStatusCode();
 
             var currencyConversionResponse = await response.Content.ReadAsJsonAsync<HNBCurrencyConversionInfo[]>(this.culture);
