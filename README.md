@@ -5,9 +5,10 @@ REQUIREMENTS:
   * For OSx:
     - macos release >= 10.12
     - dotnet-sdk
-  If you don't have dotnet-sdk installed:
-    1. Execute: "brew cask install dotnet-sdk"
-    2. Quit and reopen terminal. Execute "dotnet --info" to see if installation was successfull. 
+    
+    If you don't have dotnet-sdk installed:
+     1. Execute: "brew cask install dotnet-sdk"
+     2. Quit and reopen terminal. Execute "dotnet --info" to see if installation was successfull. 
        If not execute "ln -s /usr/local/share/dotnet/dotnet /usr/local/bin/" and do "dotnet --info" again.
 
 
