@@ -1,18 +1,20 @@
 # taxformgenerator
-Console app for generating Croatian tax forms. You can pull code and build it or you can get [OSX PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.1.1/TaxFormGenerator-osx.10.11-x64.zip) or [WIN10 PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.1.1/TaxFormGenerator-win10-x64.zip)
+Console app for generating Croatian tax forms. You can pull code and build it or you can get [OSX PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.2.0/TaxFormGenerator-osx.10.11-x64.zip) or [WIN10 PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.2.0/TaxFormGenerator-win10-x64.zip)
 
 REQUIREMENTS: 
-  - macos release >= 10.12
-  - dotnet-sdk
+  For OSx:
+    - macos release >= 10.12
+    - dotnet-sdk
 
-If you don't have dotnet-sdk installed:
+OSx - If you don't have dotnet-sdk installed:
 1. Execute: "brew cask install dotnet-sdk"
 2. Quit and reopen terminal. Execute "dotnet --info" to see if installation was successfull. 
    If not execute "ln -s /usr/local/share/dotnet/dotnet /usr/local/bin/" and do "dotnet --info" again.
 
 
 BUILD APP (skip if you are using prebuilt version):
-  - Execute "dotnet publish -c Release -r osx.10.11-x64"
+  - OSx: Execute "dotnet publish -c Release -r osx.10.11-x64"
+  - Windows: Execute "dotnet publish -c release -r win10-x64"
 
 
 USAGE:
@@ -22,8 +24,7 @@ USAGE:
       * "FormGenerator/SalaryJOPPD/ContributionsJOPPDTemplate.xml"
       * "SalaryCalculator/SalaryConfig.json"
   - Run "dotnet TaxFormGenerator.dll {PARAMS}"
-  - XML forms will be generated in "Output" folder
-
+  - XML forms and payments.pdf (with barcodes for payments) will be generated in "Output" folder
 
 
 PARAMS:
@@ -36,7 +37,7 @@ PARAMS:
   2) Date
     - data when form was generated
     - default value: now
-    - format: MM/DD/YYYY
+    - format depends on your computer settings
   3) Amount
     - payment amount
     - default value: 830
@@ -50,13 +51,14 @@ PARAMS:
   6) StartDate
     - start date of the period for which dividend is being paid
     - default value: 1st January of the year specified with Date param
-    - format: MM/DD/YYYY
+    - format depends on your computer settings
   7) EndDate
     - end date of the period for which dividend is being paid
     - default value: 31st December of the year specified with Date param
-    - format: MM/DD/YYYY
+    - format depends on your computer settings
 
-Example of the run:
+
+EXAMPLE:
   1) salary JOPPD:    
         dotnet ./TaxFormGenerator.dll --date 12/19/2017 --salaryMonth 11/2017
   2) dividend JOPPD:  
