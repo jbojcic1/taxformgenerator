@@ -2,14 +2,14 @@
 Console app for generating Croatian tax forms. You can pull code and build it or you can get [OSX PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.2.0/TaxFormGenerator-osx.10.11-x64.zip) or [WIN10 PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.2.0/TaxFormGenerator-win10-x64.zip)
 
 REQUIREMENTS: 
+
   For OSx:
     - macos release >= 10.12
     - dotnet-sdk
-
-OSx - If you don't have dotnet-sdk installed:
-1. Execute: "brew cask install dotnet-sdk"
-2. Quit and reopen terminal. Execute "dotnet --info" to see if installation was successfull. 
-   If not execute "ln -s /usr/local/share/dotnet/dotnet /usr/local/bin/" and do "dotnet --info" again.
+  If you don't have dotnet-sdk installed:
+    1. Execute: "brew cask install dotnet-sdk"
+    2. Quit and reopen terminal. Execute "dotnet --info" to see if installation was successfull. 
+       If not execute "ln -s /usr/local/share/dotnet/dotnet /usr/local/bin/" and do "dotnet --info" again.
 
 
 BUILD APP (skip if you are using prebuilt version):
