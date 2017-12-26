@@ -20,9 +20,14 @@ BUILD APP (skip if you are using prebuilt version):
 USAGE:
   - Navigate to "TaxFormGenerator/bin/Release/netcoreapp2.0/osx.10.11-x64/publish" or to you app folder if you have prebuilt version
   - Modify following config files with your params:
-      * "FormGenerator/SalaryJOPPD/ContributionsJOPPDTemplate.xml"
-      * "FormGenerator/SalaryJOPPD/ContributionsJOPPDTemplate.xml"
       * "SalaryCalculator/SalaryConfig.json"
+      * "FormGenerator/SalaryJOPPD/ContributionsJOPPDTemplate.xml"
+      * "FormGenerator/SalaryJOPPD/TaxAndSurtaxJOPPDTemplate.xml"
+      * "FormGenerator/SalaryJOPPD/PensionPillar1PaymentConfig.json"
+      * "FormGenerator/SalaryJOPPD/PensionPillar2PaymentConfig.json"
+      * "FormGenerator/SalaryJOPPD/TaxAndSurtaxPaymentConfig.json"
+      * "FormGenerator/DividendJOPPD/DividendJOPPDTemplate.xml"
+      * "FormGenerator/DividendJOPPD/PaymentConfig.json"
   - Run "dotnet TaxFormGenerator.dll {PARAMS}"
   - XML forms and payments.pdf (with barcodes for payments) will be generated in "Output" folder
 
