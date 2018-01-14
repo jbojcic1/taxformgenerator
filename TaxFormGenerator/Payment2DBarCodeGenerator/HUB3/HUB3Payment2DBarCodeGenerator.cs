@@ -24,7 +24,8 @@ namespace TaxFormGenerator.Payment2DBarCodeGenerator.HUB3
             if (!response.IsSuccessStatusCode)
             {
                 var error = await response.Content.ReadAsStringAsync();
-                // TODO: add some logging or something
+                // TODO: add some better logging or something
+                Console.WriteLine($"Payment ({paymentInfo.Receiver.Name}) - Barcode generation error: {error}");
             }
             response.EnsureSuccessStatusCode();
 

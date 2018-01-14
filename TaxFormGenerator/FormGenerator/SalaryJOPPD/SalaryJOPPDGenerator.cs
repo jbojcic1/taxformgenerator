@@ -36,7 +36,9 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
 
         public override async Task Run(TaxFormGeneratorArguments arguments)
         {
-            var salaryGrossTotalAmount = await this.currencyConverter.ConvertCurrency((decimal)arguments.Amount, arguments.Currency, arguments.Date);
+            var salaryGrossTotalAmount = arguments.Currency.ToLower() == "hrk"
+                ? (decimal)arguments.Amount
+                : await this.currencyConverter.ConvertCurrency((decimal)arguments.Amount, arguments.Currency, arguments.Date);
             var salaryBreakdown = this.salaryCalculator.Calculate(salaryGrossTotalAmount);
 
             var formStart = new DateTime(arguments.SalaryMonth.Value.Year, arguments.SalaryMonth.Value.Month, 1);
