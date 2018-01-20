@@ -20,10 +20,10 @@ namespace TaxFormGenerator.DividendCalculator
             dividendBreakdown.Gross = grossAmount;
 
             // Porez
-            dividendBreakdown.Tax = Math.Round(this.dividendTax.Tax * dividendBreakdown.Gross, 2);
+            dividendBreakdown.Tax = (this.dividendTax.Tax * dividendBreakdown.Gross).Round();
 
             // Prirez
-            dividendBreakdown.Surtax = Math.Round(this.dividendTax.Surtax * dividendBreakdown.Tax, 2);
+            dividendBreakdown.Surtax = (this.dividendTax.Surtax * dividendBreakdown.Tax).Round();
 
             return dividendBreakdown;
         }
