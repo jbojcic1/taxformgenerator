@@ -26,7 +26,7 @@ namespace TaxFormGenerator.CurrencyConverter.HNB
             response.EnsureSuccessStatusCode();
 
             var currencyConversionResponse = await response.Content.ReadAsJsonAsync<HNBCurrencyConversionInfo[]>(this.culture);
-            return Math.Round(amount * currencyConversionResponse[0].MiddleRate, 2);
+            return (amount * currencyConversionResponse[0].MiddleRate).Round();
         }
     }
 }

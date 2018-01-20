@@ -27,25 +27,25 @@ namespace TaxFormGenerator.SalaryCalculator
                 1 + this.salaryTax.HealthInsuranceContribution
                 + this.salaryTax.WorkSafetyContribution
                 + this.salaryTax.EmploymentContribution);
-            salaryBreakdown.Gross = Math.Round(gross, 2);
+            salaryBreakdown.Gross = gross.Round();
 
             // Doprinosi na
-            salaryBreakdown.HealthInsuranceContribution = Math.Round(this.salaryTax.HealthInsuranceContribution * salaryBreakdown.Gross, 2);
-            salaryBreakdown.WorkSafetyContribution = Math.Round(this.salaryTax.WorkSafetyContribution * salaryBreakdown.Gross, 2);
-            salaryBreakdown.EmploymentContribution = Math.Round(this.salaryTax.EmploymentContribution * salaryBreakdown.Gross, 2);
+            salaryBreakdown.HealthInsuranceContribution = (this.salaryTax.HealthInsuranceContribution * salaryBreakdown.Gross).Round();
+            salaryBreakdown.WorkSafetyContribution = (this.salaryTax.WorkSafetyContribution * salaryBreakdown.Gross).Round();
+            salaryBreakdown.EmploymentContribution = (this.salaryTax.EmploymentContribution * salaryBreakdown.Gross).Round();
 
             // Doprinosi iz
-            salaryBreakdown.PensionPillar1Contribution = Math.Round(this.salaryTax.PensionPillar1Contribution * salaryBreakdown.Gross, 2);
-            salaryBreakdown.PensionPillar2Contribution = Math.Round(this.salaryTax.PensionPillar2Contribution * salaryBreakdown.Gross, 2);
+            salaryBreakdown.PensionPillar1Contribution = (this.salaryTax.PensionPillar1Contribution * salaryBreakdown.Gross).Round();
+            salaryBreakdown.PensionPillar2Contribution = (this.salaryTax.PensionPillar2Contribution * salaryBreakdown.Gross).Round();
 
             // Dohodak
             salaryBreakdown.Income = salaryBreakdown.Gross - salaryBreakdown.ContributionsFrom;
 
             // Porez
-            salaryBreakdown.Tax = Math.Round(this.salaryTax.Tax * salaryBreakdown.TaxableAmount, 2);
+            salaryBreakdown.Tax = (this.salaryTax.Tax * salaryBreakdown.TaxableAmount).Round();
 
             // Prirez
-            salaryBreakdown.Surtax = Math.Round(this.salaryTax.Surtax * salaryBreakdown.Tax, 2);
+            salaryBreakdown.Surtax = (this.salaryTax.Surtax * salaryBreakdown.Tax).Round();
 
             return salaryBreakdown;
         }
