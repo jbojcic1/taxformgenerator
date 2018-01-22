@@ -68,5 +68,5 @@ EXAMPLE:
         dotnet ./TaxFormGenerator.dll --date 12/19/2017 --salaryMonth 11/2017
   2) dividend JOPPD:  
         dotnet ./TaxFormGenerator.dll --formType DividendJOPPD --date 12/20/2017 --amount 5000
-
-    
+  
+  *Note: on Windows you can also use "TaxFormGenerator.exe" instead of "dotnet ./TaxFormGenerator.dll"
