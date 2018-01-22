@@ -6,7 +6,7 @@ namespace TaxFormGenerator.Utilities
     {
         public static string GetJOPPDNumber(DateTime date)
         {
-            return $"{date.ToString("yy")}{date.DayOfYear}";
+            return $"{date.ToString("yy")}{date.DayOfYear.ToString().PadLeft(3, '0')}";
         }
     }
 }
