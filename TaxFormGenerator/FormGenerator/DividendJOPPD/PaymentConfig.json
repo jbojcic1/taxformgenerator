@@ -10,7 +10,7 @@
     "place": "{YOUR CITY}",
     "iban": "{YOUR CITY IBAN}",
     "model": "68",
-    "reference": "1910-84942119790-"
+    "reference": "1910-{YOUR OIB}-"
   },
   "purpose": "",
   "description": "Porez i prirez na dividendu"
