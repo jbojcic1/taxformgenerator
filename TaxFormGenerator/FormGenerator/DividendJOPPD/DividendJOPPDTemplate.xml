@@ -88,8 +88,8 @@
 		<Primatelji>
 			<P>
 				<P1>1</P1>
-				<P2>03778</P2>
-				<P3>03778</P3>
+				<P2>{YOUR CITY CODE}</P2>
+				<P3>{YOUR CITY CODE}</P3>
 				<P4>{OIB}</P4>
 				<P5>{FULL NAME}</P5>
 				<P61>1001</P61>
