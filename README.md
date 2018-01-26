@@ -1,5 +1,5 @@
 # taxformgenerator
-Console app for generating Croatian tax forms. You can pull code and build it or you can get [OSX PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.2.2/TaxFormGenerator-osx.10.11-x64.zip) or [WIN10 PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.2.2/TaxFormGenerator-win10-x64.zip)
+Console app for generating Croatian tax forms. You can pull code and build it or you can get [OSX PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.2.3/TaxFormGenerator-osx.10.11-x64.zip) or [WIN10 PREBUILT VERSION HERE](https://github.com/jbojcic1/taxformgenerator/releases/download/v1.2.3/TaxFormGenerator-win10-x64.zip)
 
 REQUIREMENTS: 
   * For OSx:
@@ -26,6 +26,7 @@ USAGE:
       * "FormGenerator/SalaryJOPPD/PensionPillar1PaymentConfig.json"
       * "FormGenerator/SalaryJOPPD/PensionPillar2PaymentConfig.json"
       * "FormGenerator/SalaryJOPPD/TaxAndSurtaxPaymentConfig.json"
+      * "DividendCalculator/DividendConfig.json"
       * "FormGenerator/DividendJOPPD/DividendJOPPDTemplate.xml"
       * "FormGenerator/DividendJOPPD/PaymentConfig.json"
   - Run "dotnet TaxFormGenerator.dll {PARAMS}"
