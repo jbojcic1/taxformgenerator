@@ -19,6 +19,9 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
         private const string PensionPillar1PaymentConfigPath = @"./FormGenerator/SalaryJOPPD/PensionPillar1PaymentConfig.json";
         private const string PensionPillar2PaymentConfigPath = @"./FormGenerator/SalaryJOPPD/PensionPillar2PaymentConfig.json";
         private const string TaxAndSurtaxPaymentConfigPath = @"./FormGenerator/SalaryJOPPD/TaxAndSurtaxPaymentConfig.json";
+        private const string HealthInsuranceContributionPaymentConfigPath = @"./FormGenerator/SalaryJOPPD/HealthInsuranceContributionPaymentConfig.json";
+        private const string EmploymentContributionPaymentConfigPath = @"./FormGenerator/SalaryJOPPD/EmploymentContributionPaymentConfig.json";
+        private const string WorkSafetyContributionPaymentConfigPath = @"./FormGenerator/SalaryJOPPD/WorkSafetyContributionPaymentConfig.json";
 
         private readonly ICurrencyConverter currencyConverter;
         private readonly ISalaryCalculator salaryCalculator;
@@ -76,16 +79,16 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
             pageA.SetElementValue(JOPPDNamespace + "DatumIzvjesca", date.ToString("yyyy-MM-dd"));
             pageA.SetElementValue(JOPPDNamespace + "OznakaIzvjesca", JOPPDNumber);
 
-            var doprinosi = pageA.Element(JOPPDNamespace + "Doprinosi");
+            var contributions = pageA.Element(JOPPDNamespace + "Doprinosi");
 
-            doprinosi.Element(JOPPDNamespace + "GeneracijskaSolidarnost").SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.PensionPillar1Contribution);
-            doprinosi.Element(JOPPDNamespace + "KapitaliziranaStednja").SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.PensionPillar2Contribution);
+            contributions.Element(JOPPDNamespace + "GeneracijskaSolidarnost").SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.PensionPillar1Contribution);
+            contributions.Element(JOPPDNamespace + "KapitaliziranaStednja").SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.PensionPillar2Contribution);
 
-            var zdravstvenoOsiguranje = doprinosi.Element(JOPPDNamespace + "ZdravstvenoOsiguranje");
-            zdravstvenoOsiguranje.SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.HealthInsuranceContribution);
-            zdravstvenoOsiguranje.SetElementValue(JOPPDNamespace + "P2", salaryBreakdown.WorkSafetyContribution);
+            var healthInsurance = contributions.Element(JOPPDNamespace + "ZdravstvenoOsiguranje");
+            healthInsurance.SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.HealthInsuranceContribution);
+            healthInsurance.SetElementValue(JOPPDNamespace + "P2", salaryBreakdown.WorkSafetyContribution);
 
-            doprinosi.Element(JOPPDNamespace + "Zaposljavanje").SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.EmploymentContribution);
+            contributions.Element(JOPPDNamespace + "Zaposljavanje").SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.EmploymentContribution);
 
             var pageB = newJOPPD.Element(JOPPDNamespace + "StranaB")
                 .Element(JOPPDNamespace + "Primatelji")
@@ -93,13 +96,13 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
 
             pageB.SetElementValue(JOPPDNamespace + "P101", formStart.ToString("yyyy-MM-dd"));
             pageB.SetElementValue(JOPPDNamespace + "P102", formEnd.ToString("yyyy-MM-dd"));
-            pageB.SetElementValue(JOPPDNamespace + "P12", salaryBreakdown.GrossTotal);
+            pageB.SetElementValue(JOPPDNamespace + "P12", salaryBreakdown.Gross);
             pageB.SetElementValue(JOPPDNamespace + "P121", salaryBreakdown.PensionPillar1Contribution);
             pageB.SetElementValue(JOPPDNamespace + "P122", salaryBreakdown.PensionPillar2Contribution);
             pageB.SetElementValue(JOPPDNamespace + "P123", salaryBreakdown.HealthInsuranceContribution);
             pageB.SetElementValue(JOPPDNamespace + "P124", salaryBreakdown.WorkSafetyContribution);
             pageB.SetElementValue(JOPPDNamespace + "P125", salaryBreakdown.EmploymentContribution);
-            pageB.SetElementValue(JOPPDNamespace + "P17", salaryBreakdown.GrossTotal);
+            pageB.SetElementValue(JOPPDNamespace + "P17", salaryBreakdown.Gross);
 
             using (var fileStream = new FileStream(fileFullPath, FileMode.Create))
             {
@@ -142,10 +145,10 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
 
             pageB.SetElementValue(JOPPDNamespace + "P101", formStart.ToString("yyyy-MM-dd"));
             pageB.SetElementValue(JOPPDNamespace + "P102", formEnd.ToString("yyyy-MM-dd"));
-            pageB.SetElementValue(JOPPDNamespace + "P11", salaryBreakdown.GrossTotal);
+            pageB.SetElementValue(JOPPDNamespace + "P11", salaryBreakdown.Gross);
             pageB.SetElementValue(JOPPDNamespace + "P132", salaryBreakdown.ContributionsFrom);
             pageB.SetElementValue(JOPPDNamespace + "P133", salaryBreakdown.Income);
-            pageB.SetElementValue(JOPPDNamespace + "P134", salaryBreakdown.NontaxableAmount);
+            pageB.SetElementValue(JOPPDNamespace + "P134", Math.Min(salaryBreakdown.NontaxableAmount, salaryBreakdown.Income));
             pageB.SetElementValue(JOPPDNamespace + "P135", salaryBreakdown.TaxableAmount);
             pageB.SetElementValue(JOPPDNamespace + "P141", salaryBreakdown.Tax);
             pageB.SetElementValue(JOPPDNamespace + "P142", salaryBreakdown.Surtax);
@@ -164,7 +167,27 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
 
             var contributionsPillar1PaymentBarcodeTask = GenerateContributionsPillar1Barcode(JOPPDNumber, salaryMonth, salaryBreakdown);
             var contributionsPillar2PaymentBarcodeTask = GenerateContributionsPillar2Barcode(JOPPDNumber, salaryMonth, salaryBreakdown);
-            var taxAndSurtaxPaymentBarcodeTask = GenerateTaxAndSurtaxBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+
+            Task<byte[]> taxAndSurtaxPaymentBarcodeTask = null;
+            if (salaryBreakdown.TaxTotal > 0) {
+                taxAndSurtaxPaymentBarcodeTask = GenerateTaxAndSurtaxBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);   
+            }
+
+            Task<byte[]> healthInsuranceContributionPaymentTask = null;
+            if (salaryBreakdown.HealthInsuranceContribution > 0)
+            {
+                healthInsuranceContributionPaymentTask = GenerateTaxAndSurtaxBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+            }
+
+            Task<byte[]> workSafetyContributionPaymentTask = null;
+            if (salaryBreakdown.WorkSafetyContribution > 0) {
+                workSafetyContributionPaymentTask = GenerateTaxAndSurtaxBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+            }
+
+            Task<byte[]> employmentContributionPaymentBarcodeTask = null;
+            if (salaryBreakdown.EmploymentContribution > 0) {
+                employmentContributionPaymentBarcodeTask = GenerateTaxAndSurtaxBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+            }
 
             // TODO: see if this can be made async
             using (var fs = new FileStream($"{OutputPath}/payments.pdf", FileMode.Create, FileAccess.Write, FileShare.None))
@@ -187,10 +210,12 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
 
                 doc.Add(new Paragraph("\n\n"));
 
-                doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - tax and surtax:"));
-                var taxAndSurtaxPaymentBarcodeImage = Image.GetInstance(await taxAndSurtaxPaymentBarcodeTask);
-                taxAndSurtaxPaymentBarcodeImage.ScaleToFit(300f, 60f);
-                doc.Add(taxAndSurtaxPaymentBarcodeImage);
+                if (taxAndSurtaxPaymentBarcodeTask != null) {
+                    doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - tax and surtax:"));
+                    var taxAndSurtaxPaymentBarcodeImage = Image.GetInstance(await taxAndSurtaxPaymentBarcodeTask);
+                    taxAndSurtaxPaymentBarcodeImage.ScaleToFit(300f, 60f);
+                    doc.Add(taxAndSurtaxPaymentBarcodeImage);
+                }
 
                 doc.Close();
             }
@@ -221,6 +246,33 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
             taxAndSurtaxPaymentInfo.Description = $"{taxAndSurtaxPaymentInfo.Description}{salaryMonth:MM/yyyy}";
 
             return this.payment2DBarCodeGenerator.GeneratePayment2DBarcode(taxAndSurtaxPaymentInfo);
+        }
+
+        private Task<byte[]> GenerateHealthInsuranceContributionBarcode(string JOPPDNumber, DateTime salaryMonth, SalaryBreakdown salaryBreakdown)
+        {
+            var healthInsuranceContributionPaymentInfo = new PaymentInfo(salaryBreakdown.HealthInsuranceContribution, HealthInsuranceContributionPaymentConfigPath);
+            healthInsuranceContributionPaymentInfo.Receiver.Reference = $"{healthInsuranceContributionPaymentInfo.Receiver.Reference}{JOPPDNumber}";
+            healthInsuranceContributionPaymentInfo.Description = $"{healthInsuranceContributionPaymentInfo.Description}{salaryMonth:MM/yyyy}";
+
+            return this.payment2DBarCodeGenerator.GeneratePayment2DBarcode(healthInsuranceContributionPaymentInfo);
+        }
+
+        private Task<byte[]> GenerateWorkSafetyContributionBarcode(string JOPPDNumber, DateTime salaryMonth, SalaryBreakdown salaryBreakdown)
+        {
+            var workSafetyContributionPaymentInfo = new PaymentInfo(salaryBreakdown.WorkSafetyContribution, WorkSafetyContributionPaymentConfigPath);
+            workSafetyContributionPaymentInfo.Receiver.Reference = $"{workSafetyContributionPaymentInfo.Receiver.Reference}{JOPPDNumber}";
+            workSafetyContributionPaymentInfo.Description = $"{workSafetyContributionPaymentInfo.Description}{salaryMonth:MM/yyyy}";
+
+            return this.payment2DBarCodeGenerator.GeneratePayment2DBarcode(workSafetyContributionPaymentInfo);
+        }
+
+        private Task<byte[]> GenerateEmploymentContributionBarcode(string JOPPDNumber, DateTime salaryMonth, SalaryBreakdown salaryBreakdown)
+        {
+            var employmentContributionPaymentInfo = new PaymentInfo(salaryBreakdown.EmploymentContribution, EmploymentContributionPaymentConfigPath);
+            employmentContributionPaymentInfo.Receiver.Reference = $"{employmentContributionPaymentInfo.Receiver.Reference}{JOPPDNumber}";
+            employmentContributionPaymentInfo.Description = $"{employmentContributionPaymentInfo.Description}{salaryMonth:MM/yyyy}";
+
+            return this.payment2DBarCodeGenerator.GeneratePayment2DBarcode(employmentContributionPaymentInfo);
         }
     }
 }

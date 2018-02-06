@@ -1,0 +1,17 @@
+﻿{
+  "sender": {
+    "name": "{YOUR NAME}",
+    "street": "{YOUR STREET}",
+    "place": "{YOUR POSTCODE} {YOUR CITY}"
+  },
+  "receiver": {
+    "name": "HZZO-OBVEZNO ZDRAV. OSIG",
+    "street": "",
+    "place": "ZAGREB",
+    "iban": "HR6510010051550100001",
+    "model": "68",
+    "reference": "8486-{YOUR COMPANY OIB}-"
+  },
+  "purpose": "",
+  "description": "Doprinosi obvezno zdravstveno osiguranje - "
+}

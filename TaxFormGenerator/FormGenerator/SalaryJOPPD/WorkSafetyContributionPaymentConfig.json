@@ -1,0 +1,17 @@
+﻿{
+  "sender": {
+    "name": "{YOUR NAME}",
+    "street": "{YOUR STREET}",
+    "place": "{YOUR POSTCODE} {YOUR CITY}"
+  },
+  "receiver": {
+    "name": "HZZO-ZASTITA ZDRAVLJA NA RADU",
+    "street": "",
+    "place": "ZAGREB",
+    "iban": "HR6510010051550100001",
+    "model": "68",
+    "reference": "8630-{YOUR COMPANY OIB}-"
+  },
+  "purpose": "",
+  "description": "Doprinos za zastitu zdravlja na radu - "
+}
