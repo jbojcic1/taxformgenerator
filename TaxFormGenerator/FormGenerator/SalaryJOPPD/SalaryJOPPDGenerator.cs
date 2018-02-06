@@ -173,20 +173,19 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
                 taxAndSurtaxPaymentBarcodeTask = GenerateTaxAndSurtaxBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);   
             }
 
-            Task<byte[]> healthInsuranceContributionPaymentTask = null;
-            if (salaryBreakdown.HealthInsuranceContribution > 0)
-            {
-                healthInsuranceContributionPaymentTask = GenerateTaxAndSurtaxBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+            Task<byte[]> healthInsuranceContributionPaymentBarcodeTask = null;
+            if (salaryBreakdown.HealthInsuranceContribution > 0) {
+                healthInsuranceContributionPaymentBarcodeTask = GenerateHealthInsuranceContributionBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
             }
 
-            Task<byte[]> workSafetyContributionPaymentTask = null;
+            Task<byte[]> workSafetyContributionPaymentBarcodeTask = null;
             if (salaryBreakdown.WorkSafetyContribution > 0) {
-                workSafetyContributionPaymentTask = GenerateTaxAndSurtaxBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+                workSafetyContributionPaymentBarcodeTask = GenerateWorkSafetyContributionBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
             }
 
             Task<byte[]> employmentContributionPaymentBarcodeTask = null;
             if (salaryBreakdown.EmploymentContribution > 0) {
-                employmentContributionPaymentBarcodeTask = GenerateTaxAndSurtaxBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+                employmentContributionPaymentBarcodeTask = GenerateEmploymentContributionBarcode(JOPPDNumber, salaryMonth, salaryBreakdown);
             }
 
             // TODO: see if this can be made async
@@ -210,11 +209,44 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
 
                 doc.Add(new Paragraph("\n\n"));
 
-                if (taxAndSurtaxPaymentBarcodeTask != null) {
+                if (taxAndSurtaxPaymentBarcodeTask != null) 
+                {
                     doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - tax and surtax:"));
                     var taxAndSurtaxPaymentBarcodeImage = Image.GetInstance(await taxAndSurtaxPaymentBarcodeTask);
                     taxAndSurtaxPaymentBarcodeImage.ScaleToFit(300f, 60f);
                     doc.Add(taxAndSurtaxPaymentBarcodeImage);
+
+                    doc.Add(new Paragraph("\n\n"));
+                }
+
+                if (healthInsuranceContributionPaymentBarcodeTask != null)
+                {
+                    doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - health insurance:"));
+                    var healthInsuranceContributionPaymentBarcodeImage = Image.GetInstance(await healthInsuranceContributionPaymentBarcodeTask);
+                    healthInsuranceContributionPaymentBarcodeImage.ScaleToFit(300f, 60f);
+                    doc.Add(healthInsuranceContributionPaymentBarcodeImage);
+
+                    doc.Add(new Paragraph("\n\n"));
+                }
+
+                if (workSafetyContributionPaymentBarcodeTask != null)
+                {
+                    doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - work safety:"));
+                    var workSafetyContributionPaymentBarcodeImage = Image.GetInstance(await workSafetyContributionPaymentBarcodeTask);
+                    workSafetyContributionPaymentBarcodeImage.ScaleToFit(300f, 60f);
+                    doc.Add(workSafetyContributionPaymentBarcodeImage);
+
+                    doc.Add(new Paragraph("\n\n"));
+                }
+
+                if (employmentContributionPaymentBarcodeTask != null)
+                {
+                    doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - employment contribution:"));
+                    var employmentContributionPaymentBarcodeImage = Image.GetInstance(await employmentContributionPaymentBarcodeTask);
+                    employmentContributionPaymentBarcodeImage.ScaleToFit(300f, 60f);
+                    doc.Add(employmentContributionPaymentBarcodeImage);
+
+                    doc.Add(new Paragraph("\n\n"));
                 }
 
                 doc.Close();
