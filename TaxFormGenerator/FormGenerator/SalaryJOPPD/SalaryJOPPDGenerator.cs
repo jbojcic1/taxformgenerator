@@ -81,6 +81,12 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
             doprinosi.Element(JOPPDNamespace + "GeneracijskaSolidarnost").SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.PensionPillar1Contribution);
             doprinosi.Element(JOPPDNamespace + "KapitaliziranaStednja").SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.PensionPillar2Contribution);
 
+            var zdravstvenoOsiguranje = doprinosi.Element(JOPPDNamespace + "ZdravstvenoOsiguranje");
+            zdravstvenoOsiguranje.SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.HealthInsuranceContribution);
+            zdravstvenoOsiguranje.SetElementValue(JOPPDNamespace + "P2", salaryBreakdown.WorkSafetyContribution);
+
+            doprinosi.Element(JOPPDNamespace + "Zaposljavanje").SetElementValue(JOPPDNamespace + "P1", salaryBreakdown.EmploymentContribution);
+
             var pageB = newJOPPD.Element(JOPPDNamespace + "StranaB")
                 .Element(JOPPDNamespace + "Primatelji")
                 .Element(JOPPDNamespace + "P");
@@ -90,6 +96,9 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
             pageB.SetElementValue(JOPPDNamespace + "P12", salaryBreakdown.GrossTotal);
             pageB.SetElementValue(JOPPDNamespace + "P121", salaryBreakdown.PensionPillar1Contribution);
             pageB.SetElementValue(JOPPDNamespace + "P122", salaryBreakdown.PensionPillar2Contribution);
+            pageB.SetElementValue(JOPPDNamespace + "P123", salaryBreakdown.HealthInsuranceContribution);
+            pageB.SetElementValue(JOPPDNamespace + "P124", salaryBreakdown.WorkSafetyContribution);
+            pageB.SetElementValue(JOPPDNamespace + "P125", salaryBreakdown.EmploymentContribution);
             pageB.SetElementValue(JOPPDNamespace + "P17", salaryBreakdown.GrossTotal);
 
             using (var fileStream = new FileStream(fileFullPath, FileMode.Create))
