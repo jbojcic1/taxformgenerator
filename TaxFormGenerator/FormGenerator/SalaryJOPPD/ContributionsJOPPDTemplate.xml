@@ -65,8 +65,8 @@
 				<P5>0.00</P5>
 			</KapitaliziranaStednja>
 			<ZdravstvenoOsiguranje>
-				<P1>0.00</P1>
-				<P2>0.00</P2>
+				<P1></P1>
+				<P2></P2>
 				<P3>0.00</P3>
 				<P4>0.00</P4>
 				<P5>0.00</P5>
@@ -77,7 +77,7 @@
 				<P10>0.00</P10>
 			</ZdravstvenoOsiguranje>
 			<Zaposljavanje>
-				<P1>0.00</P1>
+				<P1></P1>
 				<P2>0.00</P2>
 				<P3>0.00</P3>
 			</Zaposljavanje>
@@ -98,11 +98,11 @@
 		<Primatelji>
 			<P>
 				<P1>1</P1>
-				<P2>03778</P2>
-				<P3>03778</P3>
+				<P2>{YOUR CITY CODE}</P2>
+				<P3>{YOUR CITY CODE}</P3>
 				<P4>{OIB}</P4>
 				<P5>{FULL NAME}</P5>
-				<P61>0010</P61>
+				<P61>{EMPLOYMENT TYPE CODE}</P61>
 				<P62>0084</P62>
 				<P71>0</P71>
 				<P72>0</P72>
@@ -116,9 +116,9 @@
 				<P12></P12>
 				<P121></P121>
 				<P122></P122>
-				<P123>0.00</P123>
-				<P124>0.00</P124>
-				<P125>0.00</P125>
+				<P123></P123>
+				<P124></P124>
+				<P125></P125>
 				<P126>0.00</P126>
 				<P127>0.00</P127>
 				<P128>0.00</P128>
