@@ -70,9 +70,10 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
                 newJOPPD = await XElement.LoadAsync(fileStream, LoadOptions.None, cts.Token);  
             }
 
-            newJOPPD.Element(MetadataNamespace + "Metapodaci")
-                .Element(MetadataNamespace + "Datum")
-                .SetValue(date.ToString("yyyy-MM-ddTHH:mm:ss"));
+            var metadata = newJOPPD.Element(MetadataNamespace + "Metapodaci");
+
+            metadata.Element(MetadataNamespace + "Datum").SetValue(date.ToString("yyyy-MM-ddTHH:mm:ss"));
+            metadata.Element(MetadataNamespace + "Identifikator").SetValue(Guid.NewGuid());
 
             var pageA = newJOPPD.Element(JOPPDNamespace + "StranaA");
 

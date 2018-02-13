@@ -5,7 +5,7 @@
 		<Datum dc="http://purl.org/dc/elements/1.1/date"></Datum>
 		<Format dc="http://purl.org/dc/elements/1.1/format">text/xml</Format>
 		<Jezik dc="http://purl.org/dc/elements/1.1/language">hr-HR</Jezik>
-		<Identifikator dc="http://purl.org/dc/elements/1.1/identifier">16798a33-65e2-4781-b0fb-917c0e41f79f</Identifikator>
+		<Identifikator dc="http://purl.org/dc/elements/1.1/identifier"></Identifikator>
 		<Uskladjenost dc="http://purl.org/dc/terms/conformsTo">ObrazacJOPPD-v1-1</Uskladjenost>
 		<Tip dc="http://purl.org/dc/elements/1.1/type">Elektronički obrazac</Tip>
 		<Adresant>Ministarstvo Financija, Porezna uprava, Zagreb</Adresant>
