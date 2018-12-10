@@ -43,8 +43,12 @@ PARAMS:
         * SalaryJOPPD
         * DividendJOPPD
     - default value: SalaryJOPPD
-  2) Date
+  2) FormDate
     - data when form was generated
+    - default value: now
+    - format depends on your computer settings
+  3) PaymentDate
+    - data when payment has been received
     - default value: now
     - format depends on your computer settings
   3) Amount
@@ -59,18 +63,18 @@ PARAMS:
     - format: MM/YYYY
   6) StartDate
     - start date of the period for which dividend is being paid
-    - default value: 1st January of the year specified with Date param
+    - default value: 1st January of the current year
     - format depends on your computer settings
   7) EndDate
     - end date of the period for which dividend is being paid
-    - default value: 31st December of the year specified with Date param
+    - default value: 31st December of the current year
     - format depends on your computer settings
 
 
 EXAMPLE:
   1) salary JOPPD:    
-        dotnet ./TaxFormGenerator.dll --date 12/19/2017 --salaryMonth 11/2017
+        dotnet ./TaxFormGenerator.dll --date 12/19/2017 --paymentDate 12/17/2017 --salaryMonth 11/2017
   2) dividend JOPPD:  
-        dotnet ./TaxFormGenerator.dll --formType DividendJOPPD --date 12/20/2017 --amount 5000
+        dotnet ./TaxFormGenerator.dll --formType DividendJOPPD --date 12/20/2017 --paymentDate 12/15/2017 --amount 5000
   
   *Note: on Windows you can also use "TaxFormGenerator.exe" instead of "dotnet ./TaxFormGenerator.dll"
