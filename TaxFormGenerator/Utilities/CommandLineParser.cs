@@ -14,8 +14,12 @@ namespace TaxFormGenerator.Utilities
                   .As('f', "formType")
                   .SetDefault(FormType.SalaryJOPPD);
 
-            parser.Setup(arg => arg.Date)
-                  .As('d', "date")
+            parser.Setup(arg => arg.FormDate)
+                  .As('d', "formDate")
+                  .SetDefault(DateTime.Now);
+
+            parser.Setup(arg => arg.PaymentDate)
+                  .As('p', "paymentDate")
                   .SetDefault(DateTime.Now);
 
             parser.Setup(arg => arg.StartDate)
