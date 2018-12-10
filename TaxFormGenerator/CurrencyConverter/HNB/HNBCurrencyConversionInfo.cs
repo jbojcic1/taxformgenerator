@@ -8,7 +8,7 @@ namespace TaxFormGenerator.CurrencyConverter.HNB
         [JsonProperty("Broj tečajnice")]
         public int Id { get; set; }
 
-	[JsonProperty("Jedinica")]
+	    [JsonProperty("Jedinica")]
         public int Unit { get; set; }
 
         [JsonProperty("Datum primjene")]
