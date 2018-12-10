@@ -8,7 +8,7 @@ namespace TaxFormGenerator.CurrencyConverter.HNB
 {
     public class HNBCurrencyConverter : ICurrencyConverter
     {
-        private const string ApiUrl = "http://api.hnb.hr/tecajn";
+        private const string ApiUrl = "http://api.hnb.hr/tecajn/v1";
 
         private readonly CultureInfo culture;
         private readonly HttpClient httpClient;

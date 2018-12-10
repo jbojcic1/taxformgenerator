@@ -54,12 +54,18 @@ namespace TaxFormGenerator.FormGenerator.DividendJOPPD
 
             CopyTemplate("DividendJOPPDTemplate.xml", fileName);
 
-            var cts = new CancellationTokenSource();
-            var newJOPPD = await XElement.LoadAsync(new FileStream(fileFullPath, FileMode.Open), LoadOptions.None, cts.Token);
+            XElement newJOPPD;
 
-            newJOPPD.Element(MetadataNamespace + "Metapodaci")
-                    .Element(MetadataNamespace + "Datum")
-                    .SetValue(formDate.ToString("yyyy-MM-ddTHH:mm:ss"));
+            using (var fileStream = new FileStream(fileFullPath, FileMode.Open))
+            {
+                var cts = new CancellationTokenSource();
+                newJOPPD = await XElement.LoadAsync(fileStream, LoadOptions.None, cts.Token);
+            }
+
+            var metadata = newJOPPD.Element(MetadataNamespace + "Metapodaci");
+
+            metadata.Element(MetadataNamespace + "Datum").SetValue(formDate.ToString("yyyy-MM-ddTHH:mm:ss"));
+            metadata.Element(MetadataNamespace + "Identifikator").SetValue(Guid.NewGuid());
 
             var pageA = newJOPPD.Element(JOPPDNamespace + "StranaA");
 
@@ -80,7 +86,11 @@ namespace TaxFormGenerator.FormGenerator.DividendJOPPD
             pageB.SetElementValue(JOPPDNamespace + "P142", dividendBreakdown.Surtax);
             pageB.SetElementValue(JOPPDNamespace + "P162", dividendBreakdown.Net);
 
-            await newJOPPD.SaveAsync(new FileStream(fileFullPath, FileMode.Create), SaveOptions.None, cts.Token);
+            using (var fileStream = new FileStream(fileFullPath, FileMode.Create))
+            {
+                var cts = new CancellationTokenSource();
+                await newJOPPD.SaveAsync(fileStream, SaveOptions.None, cts.Token);
+            }
         }
 
         private async Task GeneratePayment(DateTime formDate, DividendBreakdown dividendBreakdown) 

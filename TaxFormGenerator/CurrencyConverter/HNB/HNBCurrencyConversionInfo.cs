@@ -5,28 +5,31 @@ namespace TaxFormGenerator.CurrencyConverter.HNB
 {
     public class HNBCurrencyConversionInfo
     {
-        [JsonProperty("broj_tecajnice")]
+        [JsonProperty("Broj tečajnice")]
         public int Id { get; set; }
 
-        [JsonProperty("datum")]
+	    [JsonProperty("Jedinica")]
+        public int Unit { get; set; }
+
+        [JsonProperty("Datum primjene")]
         public DateTime Date { get; set; }
 
-        [JsonProperty("drzava")]
+        [JsonProperty("Država")]
         public string State { get; set; }
 
-        [JsonProperty("sifra_valute")]
+        [JsonProperty("Šifra valute")]
         public string CurrencyCode { get; set; }
 
-        [JsonProperty("valuta")]
+        [JsonProperty("Valuta")]
         public string Currency { get; set; }
 
-        [JsonProperty("kupovni_tecaj")]
+        [JsonProperty("Kupovni za devize")]
         public decimal BuyRate { get; set; }
 
-        [JsonProperty("srednji_tecaj")]
+        [JsonProperty("Srednji za devize")]
         public decimal MiddleRate { get; set; }
 
-        [JsonProperty("prodajni_tecaj")]
+        [JsonProperty("Prodajni za devize")]
         public decimal SellRate { get; set; }
     }
 }
