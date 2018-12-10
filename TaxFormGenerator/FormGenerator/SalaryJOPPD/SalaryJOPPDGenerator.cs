@@ -41,23 +41,23 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
         {
             var salaryGrossTotalAmount = arguments.Currency.ToLower() == "hrk"
                 ? (decimal)arguments.Amount
-                : await this.currencyConverter.ConvertCurrency((decimal)arguments.Amount, arguments.Currency, arguments.Date);
+                : await this.currencyConverter.ConvertCurrency((decimal)arguments.Amount, arguments.Currency, arguments.PaymentDate);
             var salaryBreakdown = this.salaryCalculator.Calculate(salaryGrossTotalAmount);
 
             var formStart = new DateTime(arguments.SalaryMonth.Value.Year, arguments.SalaryMonth.Value.Month, 1);
             var formEnd = formStart.AddMonths(1).AddDays(-1);
 
-            var taxAndSurtaxFormTask = GenerateTaxAndSurtaxJOPPD(arguments.Date, salaryBreakdown, formStart, formEnd);
-            var contributionsFormTask = GenerateContributionsJOPPD(arguments.Date, salaryBreakdown, formStart, formEnd);
+            var taxAndSurtaxFormTask = GenerateTaxAndSurtaxJOPPD(arguments.FormDate, salaryBreakdown, formStart, formEnd);
+            var contributionsFormTask = GenerateContributionsJOPPD(arguments.FormDate, salaryBreakdown, formStart, formEnd);
 
-            var paymentsTask = GeneratePayments(arguments.Date, arguments.SalaryMonth.Value, salaryBreakdown);
+            var paymentsTask = GeneratePayments(arguments.FormDate, arguments.SalaryMonth.Value, salaryBreakdown);
 
             await Task.WhenAll(taxAndSurtaxFormTask, contributionsFormTask, paymentsTask);
         }
 
-        private async Task GenerateContributionsJOPPD(DateTime date, SalaryBreakdown salaryBreakdown, DateTime formStart, DateTime formEnd) {
-            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(date);
-            var fileName = $"doprinosi-{JOPPDNumber}-{date:yyyy-MM-dd}.xml";
+        private async Task GenerateContributionsJOPPD(DateTime formDate, SalaryBreakdown salaryBreakdown, DateTime formStart, DateTime formEnd) {
+            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(formDate);
+            var fileName = $"doprinosi-{JOPPDNumber}-{formDate:yyyy-MM-dd}.xml";
             var fileFullPath = Path.Combine(OutputPath, fileName);
 
             CopyTemplate("ContributionsJOPPDTemplate.xml", fileName);
@@ -72,11 +72,11 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
 
             newJOPPD.Element(MetadataNamespace + "Metapodaci")
                 .Element(MetadataNamespace + "Datum")
-                .SetValue(date.ToString("yyyy-MM-ddTHH:mm:ss"));
+                .SetValue(formDate.ToString("yyyy-MM-ddTHH:mm:ss"));
 
             var pageA = newJOPPD.Element(JOPPDNamespace + "StranaA");
 
-            pageA.SetElementValue(JOPPDNamespace + "DatumIzvjesca", date.ToString("yyyy-MM-dd"));
+            pageA.SetElementValue(JOPPDNamespace + "DatumIzvjesca", formDate.ToString("yyyy-MM-dd"));
             pageA.SetElementValue(JOPPDNamespace + "OznakaIzvjesca", JOPPDNumber);
 
             var contributions = pageA.Element(JOPPDNamespace + "Doprinosi");
@@ -111,9 +111,9 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
             }
         }
 
-        private async Task GenerateTaxAndSurtaxJOPPD(DateTime date, SalaryBreakdown salaryBreakdown, DateTime formStart, DateTime formEnd) {
-            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(date);
-            var fileName = $"porezIPrirez-{JOPPDNumber}-{date:yyyy-MM-dd}.xml";
+        private async Task GenerateTaxAndSurtaxJOPPD(DateTime formDate, SalaryBreakdown salaryBreakdown, DateTime formStart, DateTime formEnd) {
+            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(formDate);
+            var fileName = $"porezIPrirez-{JOPPDNumber}-{formDate:yyyy-MM-dd}.xml";
             var fileFullPath = Path.Combine(OutputPath, fileName);
 
             CopyTemplate("TaxAndSurtaxJOPPDTemplate.xml", fileName);
@@ -128,11 +128,11 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
 
             newJOPPD.Element(MetadataNamespace + "Metapodaci")
                 .Element(MetadataNamespace + "Datum")
-                .SetValue(date.ToString("yyyy-MM-ddTHH:mm:ss"));
+                .SetValue(formDate.ToString("yyyy-MM-ddTHH:mm:ss"));
 
             var pageA = newJOPPD.Element(JOPPDNamespace + "StranaA");
 
-            pageA.SetElementValue(JOPPDNamespace + "DatumIzvjesca", date.ToString("yyyy-MM-dd"));
+            pageA.SetElementValue(JOPPDNamespace + "DatumIzvjesca", formDate.ToString("yyyy-MM-dd"));
             pageA.SetElementValue(JOPPDNamespace + "OznakaIzvjesca", JOPPDNumber);
 
             var tax = pageA.Element(JOPPDNamespace + "PredujamPoreza");
@@ -161,9 +161,9 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
             }
         }
 
-        private async Task GeneratePayments(DateTime date, DateTime salaryMonth, SalaryBreakdown salaryBreakdown)
+        private async Task GeneratePayments(DateTime formDate, DateTime salaryMonth, SalaryBreakdown salaryBreakdown)
         {
-            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(date);
+            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(formDate);
 
             var contributionsPillar1PaymentBarcodeTask = GenerateContributionsPillar1Barcode(JOPPDNumber, salaryMonth, salaryBreakdown);
             var contributionsPillar2PaymentBarcodeTask = GenerateContributionsPillar2Barcode(JOPPDNumber, salaryMonth, salaryBreakdown);

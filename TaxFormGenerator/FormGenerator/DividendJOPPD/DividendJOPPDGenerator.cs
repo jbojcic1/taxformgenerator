@@ -34,19 +34,22 @@ namespace TaxFormGenerator.FormGenerator.DividendJOPPD
 
         public override async Task Run(TaxFormGeneratorArguments arguments)
         {
-            var dividendGrossAmount = await this.currencyConverter.ConvertCurrency((decimal)arguments.Amount, arguments.Currency, arguments.Date);
+            var dividendGrossAmount = arguments.Currency.ToLower() == "hrk"
+                ? (decimal)arguments.Amount
+                : await this.currencyConverter.ConvertCurrency((decimal)arguments.Amount, arguments.Currency, arguments.PaymentDate);
+            
             var dividendBreakdown = this.dividendCalculator.Calculate(dividendGrossAmount);
 
-            var generateJOPPDTask = GenerateJOPPD(arguments.Date, dividendBreakdown, arguments.StartDate, arguments.EndDate);
-            var generatePayment2DBarcodeTask = GeneratePayment(arguments.Date, dividendBreakdown);
+            var generateJOPPDTask = GenerateJOPPD(arguments.FormDate, dividendBreakdown, arguments.StartDate, arguments.EndDate);
+            var generatePayment2DBarcodeTask = GeneratePayment(arguments.FormDate, dividendBreakdown);
 
             await Task.WhenAll(generateJOPPDTask, generatePayment2DBarcodeTask);
         }
 
-        private async Task GenerateJOPPD(DateTime date, DividendBreakdown dividendBreakdown, DateTime formStart, DateTime formEnd)
+        private async Task GenerateJOPPD(DateTime formDate, DividendBreakdown dividendBreakdown, DateTime formStart, DateTime formEnd)
         {
-            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(date);
-            var fileName = $"dividend-{JOPPDNumber}-{date.ToString("yyyy-MM-dd")}.xml";
+            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(formDate);
+            var fileName = $"dividend-{JOPPDNumber}-{formDate.ToString("yyyy-MM-dd")}.xml";
             var fileFullPath = Path.Combine(OutputPath, fileName);
 
             CopyTemplate("DividendJOPPDTemplate.xml", fileName);
@@ -56,11 +59,11 @@ namespace TaxFormGenerator.FormGenerator.DividendJOPPD
 
             newJOPPD.Element(MetadataNamespace + "Metapodaci")
                     .Element(MetadataNamespace + "Datum")
-                    .SetValue(date.ToString("yyyy-MM-ddTHH:mm:ss"));
+                    .SetValue(formDate.ToString("yyyy-MM-ddTHH:mm:ss"));
 
             var pageA = newJOPPD.Element(JOPPDNamespace + "StranaA");
 
-            pageA.SetElementValue(JOPPDNamespace + "DatumIzvjesca", date.ToString("yyyy-MM-dd"));
+            pageA.SetElementValue(JOPPDNamespace + "DatumIzvjesca", formDate.ToString("yyyy-MM-dd"));
             pageA.SetElementValue(JOPPDNamespace + "OznakaIzvjesca", JOPPDNumber);
             pageA.Element(JOPPDNamespace + "PredujamPoreza").SetElementValue(JOPPDNamespace + "P2", dividendBreakdown.TaxTotal);
 
@@ -80,9 +83,9 @@ namespace TaxFormGenerator.FormGenerator.DividendJOPPD
             await newJOPPD.SaveAsync(new FileStream(fileFullPath, FileMode.Create), SaveOptions.None, cts.Token);
         }
 
-        private async Task GeneratePayment(DateTime date, DividendBreakdown dividendBreakdown) 
+        private async Task GeneratePayment(DateTime formDate, DividendBreakdown dividendBreakdown) 
         {
-            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(date);
+            var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(formDate);
             var paymentInfo = new PaymentInfo(dividendBreakdown.TaxTotal, PaymentFilePath);
             paymentInfo.Receiver.Reference = $"{paymentInfo.Receiver.Reference}{JOPPDNumber}";
 
@@ -94,7 +97,7 @@ namespace TaxFormGenerator.FormGenerator.DividendJOPPD
             using(var writer = PdfWriter.GetInstance(doc, fs))   
             {
                 doc.Open();
-                doc.Add(new Paragraph($"{date.ToString("yyyy-MM-dd")} dividend tax and surtax payment:"));
+                doc.Add(new Paragraph($"{formDate.ToString("yyyy-MM-dd")} dividend tax and surtax payment:"));
                 Image image = Image.GetInstance(payment2DBarcode);
                 image.ScaleToFit(300f, 60f);
                 doc.Add(image);
