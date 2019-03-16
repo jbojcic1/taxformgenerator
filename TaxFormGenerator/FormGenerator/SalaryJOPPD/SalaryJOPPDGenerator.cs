@@ -167,8 +167,16 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
         {
             var JOPPDNumber = JOPPDHelper.GetJOPPDNumber(formDate);
 
-            var contributionsPillar1PaymentBarcodeTask = GenerateContributionsPillar1Barcode(JOPPDNumber, salaryMonth, salaryBreakdown);
-            var contributionsPillar2PaymentBarcodeTask = GenerateContributionsPillar2Barcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+            // TODO: handle this better than with these ifs
+            Task<byte[]> contributionsPillar1PaymentBarcodeTask = null;
+            if (salaryBreakdown.PensionPillar1Contribution > 0) {
+                contributionsPillar1PaymentBarcodeTask = GenerateContributionsPillar1Barcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+            }
+
+            Task<byte[]> contributionsPillar2PaymentBarcodeTask = null;
+            if (salaryBreakdown.PensionPillar2Contribution > 0) {
+                contributionsPillar2PaymentBarcodeTask = GenerateContributionsPillar2Barcode(JOPPDNumber, salaryMonth, salaryBreakdown);
+            }
 
             Task<byte[]> taxAndSurtaxPaymentBarcodeTask = null;
             if (salaryBreakdown.TaxTotal > 0) {
@@ -197,19 +205,25 @@ namespace TaxFormGenerator.FormGenerator.SalaryJOPPD
             {
                 doc.Open();
 
-                doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - pension pillar 1 contribution:"));
-                var pillar1PaymentBarcodeImage = Image.GetInstance(await contributionsPillar1PaymentBarcodeTask);
-                pillar1PaymentBarcodeImage.ScaleToFit(300f, 60f);
-                doc.Add(pillar1PaymentBarcodeImage);
+                if (contributionsPillar1PaymentBarcodeTask != null) 
+                {
+                    doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - pension pillar 1 contribution:"));
+                    var pillar1PaymentBarcodeImage = Image.GetInstance(await contributionsPillar1PaymentBarcodeTask);
+                    pillar1PaymentBarcodeImage.ScaleToFit(300f, 60f);
+                    doc.Add(pillar1PaymentBarcodeImage);
 
-                doc.Add(new Paragraph("\n\n"));
+                    doc.Add(new Paragraph("\n\n"));
+                }
 
-                doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - pension pillar 2 contribution:"));
-                var pillar2PaymentBarcodeImage = Image.GetInstance(await contributionsPillar2PaymentBarcodeTask);
-                pillar2PaymentBarcodeImage.ScaleToFit(300f, 60f);
-                doc.Add(pillar2PaymentBarcodeImage);
+                if (contributionsPillar2PaymentBarcodeTask != null)
+                {
+                    doc.Add(new Paragraph($"Salary for {salaryMonth:MM/yyyy} - pension pillar 2 contribution:"));
+                    var pillar2PaymentBarcodeImage = Image.GetInstance(await contributionsPillar2PaymentBarcodeTask);
+                    pillar2PaymentBarcodeImage.ScaleToFit(300f, 60f);
+                    doc.Add(pillar2PaymentBarcodeImage);
 
-                doc.Add(new Paragraph("\n\n"));
+                    doc.Add(new Paragraph("\n\n"));
+                }
 
                 if (taxAndSurtaxPaymentBarcodeTask != null) 
                 {
